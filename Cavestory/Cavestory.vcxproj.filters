@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="headers">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="content">
+      <UniqueIdentifier>{feafdcbd-89f9-485c-98b2-954782d5dbf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="content\sprites">
+      <UniqueIdentifier>{4642df34-cc68-4292-b42b-f7dabee8c593}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\source\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\graphics.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\game.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\input.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\sprite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\animatedsprite.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\player.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\source\graphics.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\game.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\input.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\sprite.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\globals.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\animatedsprite.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\player.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\content\sprites\MyChar.png">
+      <Filter>content\sprites</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
