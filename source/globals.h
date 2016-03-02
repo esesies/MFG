@@ -6,8 +6,8 @@ namespace globals
   const int SCREEN_WIDTH  = 640;
   const int SCREEN_HEIGHT = 480;
 
-  const float MAX_WIDTH = (float_t)(SCREEN_WIDTH - 32.0f);
-  const float MAX_HEIGHT = (float_t)(SCREEN_HEIGHT - 32.0f);
+  const float MAX_WIDTH = (float)(SCREEN_WIDTH - 32.0f);
+  const float MAX_HEIGHT = (float)(SCREEN_HEIGHT - 32.0f);
 
   const float SPRITE_SCALE = 2.0f;
 
