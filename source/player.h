@@ -13,7 +13,7 @@ class Player : public AnimatedSprite
 {
 public:
   Player();
-  Player(Graphics &graphics, float x, float y);
+  Player(Graphics &graphics, Vector2 spawnPoint);
   void draw(Graphics &graphics);
   void update(float elapsedTime);
 
@@ -50,10 +50,17 @@ public:
   virtual void animationDone(std::string currentAnimation);
   virtual void setupAnimations(void);
 
+  void HandleTileCollisions(std::vector<Rectangle>& others);
+
+  const float getX() const;
+  const float getY() const;
+
 private:
   float _dx, _dy; //represents the change in the x and y positions during the frame.
 
   Direction _facing;
+
+  bool _grounded;
 
 };
 

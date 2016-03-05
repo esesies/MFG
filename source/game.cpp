@@ -33,8 +33,8 @@ void Game::gameLoop()
   SDL_Event event;
   Input input;
 
-  this->_player = Player(graphics, 100, 100);
   this->_level = Level("Map1", Vector2(100, 100), graphics);
+  this->_player = Player(graphics, this->_level.GetPlayerSpawnPoint());
 
   int LAST_UPDATE_TIME = SDL_GetTicks();
   //Start the game loop
@@ -72,24 +72,11 @@ void Game::gameLoop()
     {
       this->_player.moveRight();
     }
-    if (input.isKeyHeld(SDL_SCANCODE_UP) == true)
-    {
-      this->_player.moveUp();
-    }
-    if (input.isKeyHeld(SDL_SCANCODE_DOWN) == true)
-    {
-      this->_player.moveDown();
-    }
 
     if (!input.isKeyHeld(SDL_SCANCODE_LEFT) &&
       !input.isKeyHeld(SDL_SCANCODE_RIGHT))
     {
       this->_player.stopMovingX();
-    }
-    if (!input.isKeyHeld(SDL_SCANCODE_UP) && 
-        !input.isKeyHeld(SDL_SCANCODE_DOWN))
-    {
-      this->_player.stopMovingY();
     }
 
 
@@ -116,4 +103,12 @@ void Game::update(float elapsedTime)
 {
   this->_player.update(elapsedTime);
   this->_level.update(elapsedTime);
+
+  //Check collisions
+  std::vector<Rectangle> others = this->_level.CheckTileCollision(this->_player.GetBoundingBox());
+  if (others.size() > 0)
+  {
+    //Player collided with at least 1 tile. Handle it.
+    this->_player.HandleTileCollisions(others);
+  }
 }
