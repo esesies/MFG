@@ -32,7 +32,7 @@ public:
       side == sides::BOTTOM ? this->GetBottom() :
       -1;
   }
-
+  
   const bool CollidesWith(const Rectangle& other) const
   {
     if (this->GetRight() < other.GetLeft())

@@ -1,9 +1,12 @@
 #include "player.h"
 #include "graphics.h"
 
+#include <cmath>
+
 namespace player_constants
 {
   const float WALK_SPEED = 0.2f;
+  const float JUMP_SPEED = 0.7f;
   const float GRAVITY = 0.002f;
   const float GRAVITY_CAP = 0.8f;
 }
@@ -90,6 +93,16 @@ void Player::stopMovingY(void)
   //this->playAnimation(this->_facing == RIGHT ? "IdleRight" : "IdleLeft");
 }
 
+void Player::jump(void)
+{
+  if (this->_grounded)
+  {
+    this->_dy = -player_constants::JUMP_SPEED;
+    this->_grounded = false;
+  }
+}
+
+
 //void HandleTileCollision
 //Handle collisions with ALL tiles the player is colliding with
 void Player::HandleTileCollisions(std::vector<Rectangle>& others)
@@ -104,6 +117,11 @@ void Player::HandleTileCollisions(std::vector<Rectangle>& others)
       case sides::TOP:
         this->_y = others.at(i).GetBottom() + 1;
         this->_dy = 0;
+        if (this->_grounded)
+        {
+          this->_dx = 0; //Stop movement
+          this->_x -= this->_facing == RIGHT ? 0.5f : -0.5f;
+        }          
         break;
       case sides::BOTTOM:
         this->_y = others.at(i).GetTop() - this->_boundingBox.GetHeight() - 1;
@@ -121,6 +139,25 @@ void Player::HandleTileCollisions(std::vector<Rectangle>& others)
   }
 }
 
+//void HandleSlopeCollision
+//Handles collisions with ALL slopes tha player is colliding with
+void Player::HandleSlopeCollision(std::vector<Slope>& others)
+{
+  for (int i = 0; i < others.size(); i++)
+  {
+    int n = others.at(i).GetP1().y - (others.at(i).GetSlope() * fabs(others.at(i).GetP1().x));
+
+    int centerX = this->_boundingBox.GetCenterX();
+
+    int newY = (others.at(i).GetSlope() * centerX) + n - 8; //TODO
+
+    if (this->_grounded)
+    {
+      this->_y = newY - this->_boundingBox.GetHeight();
+      this->_grounded = true;
+    }
+  }
+}
 
 void Player::update(float elapsedTime)
 {

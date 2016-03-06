@@ -1,13 +1,14 @@
 #include "level.h"
 #include "graphics.h"
-#include "globals.h"
 #include "tinyxml2.h"
+#include "utils.h"
 
 
 #include <SDL.h>
 #include <sstream>
 #include <algorithm>
 #include <cmath>
+
 
 using namespace tinyxml2;
 
@@ -196,6 +197,49 @@ void Level::loadMap(std::string mapName, Graphics &graphics)
         }
 
       }
+      else if (ss.str() == "slopes")
+      {
+        XMLElement* pObject = pObjectGroup->FirstChildElement("object");
+        if (pObject != NULL)
+        {
+          while (pObject)
+          {
+            std::vector<Vector2> points;
+            Vector2 p1;           
+            p1.x = std::ceil(pObject->FloatAttribute("x"));
+            p1.y = std::ceil(pObject->FloatAttribute("y"));
+
+            XMLElement* pPolyline = pObject->FirstChildElement("polyline");
+            if (pPolyline != NULL)
+            {
+              std::vector<std::string> pairs;
+              const char* pointString = pPolyline->Attribute("points");
+              std::stringstream ss;
+              ss << pointString;
+              Utils::Split(ss.str(), pairs, ' ');
+              //Now we have each of the pairs.
+              for (int i = 0; i < pairs.size(); i++)
+              {
+                std::vector<std::string> ps;
+                Utils::Split(pairs.at(i), ps, ',');
+                points.push_back(Vector2(std::stoi(ps.at(0)), std::stoi(ps.at(1))));
+              }
+            }
+
+            for (int i = 0; i < points.size(); i+=2)
+            {
+              this->_slopes.push_back(Slope(
+                Vector2((p1.x + points.at(i < 2 ? i : i - 1).x) * globals::SPRITE_SCALE,
+                       ((p1.y + points.at(i < 2 ? i : i - 1).y) * globals::SPRITE_SCALE)),
+                Vector2((p1.x + points.at(i < 2 ? i + 1 : i).x) * globals::SPRITE_SCALE,
+                        (p1.y + points.at(i < 2 ? i + 1 : i).y) * globals::SPRITE_SCALE))
+                );
+            }
+
+            pObject = pObject->NextSiblingElement("object");
+          }
+        }
+      }
       else if (ss.str() == "spawn points")
       {
         XMLElement* pObject = pObjectGroup->FirstChildElement("object");
@@ -271,12 +315,20 @@ std::vector<Rectangle> Level::CheckTileCollision(const Rectangle& other)
   std::vector<Rectangle> others;
   
   for (int i = 0; i < this->_collisionRects.size(); i++)
-  {
     if (this->_collisionRects.at(i).CollidesWith(other))
-    {
       others.push_back(this->_collisionRects.at(i));
-    }
-  }
+
+  return others;
+}
+
+std::vector<Slope> Level::CheckSlopeCollision(const Rectangle & other)
+{
+  std::vector<Slope> others;
+
+  for (int i = 0; i < this->_slopes.size(); i++)
+    if (this->_slopes.at(i).CollidesWith(other))
+      others.push_back(this->_slopes.at(i));
+
   return others;
 }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="16" tilewidth="16" tileheight="16" nextobjectid="33">
- <tileset firstgid="1" name="PrtCave" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="PrtCave" tilewidth="16" tileheight="16" tilecount="82" columns="16">
   <image source="../content/tilesets/PrtCave.png" width="256" height="80"/>
  </tileset>
  <layer name="background" width="20" height="16">
@@ -681,8 +681,8 @@
   <object id="19" x="184.003" y="185.49">
    <polyline points="0,0 22.4892,-14.3113"/>
   </object>
-  <object id="20" x="113.721" y="171.704">
-   <polyline points="0,0 22.3203,13.7164"/>
+  <object id="20" x="113.5" y="174.5">
+   <polyline points="0,0 22.5413,10.9204"/>
   </object>
   <object id="21" x="82.2142" y="111.404">
    <polyline points="0,0 31.1847,14.1749"/>
