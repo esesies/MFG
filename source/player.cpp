@@ -99,6 +99,7 @@ void Player::jump(void)
   {
     this->_dy = -player_constants::JUMP_SPEED;
     this->_grounded = false;
+    this->_rotation = 0.0f;
   }
 }
 
@@ -127,6 +128,7 @@ void Player::HandleTileCollisions(std::vector<Rectangle>& others)
         this->_y = others.at(i).GetTop() - this->_boundingBox.GetHeight() - 1;
         this->_dy = 0;
         this->_grounded = true;
+        this->_rotation = 0.0f;
         break;
       case sides::LEFT:
         this->_x = others.at(i).GetRight() + 1;
@@ -147,14 +149,22 @@ void Player::HandleSlopeCollision(std::vector<Slope>& others)
   {
     int n = others.at(i).GetP1().y - (others.at(i).GetSlope() * fabs(others.at(i).GetP1().x));
 
-    int centerX = this->_boundingBox.GetCenterX();
+    int centerX;
 
-    int newY = (others.at(i).GetSlope() * centerX) + n - 8; //TODO
+    //if (others.at(i).GetSlope() > 0)
+    //  centerX = this->_boundingBox.GetLeft();
+    //else
+    //  centerX = this->_boundingBox.GetRight();
+
+    centerX = this->_boundingBox.GetCenterX();
+
+    int newY = (others.at(i).GetSlope() * centerX) + n;
 
     if (this->_grounded)
     {
       this->_y = newY - this->_boundingBox.GetHeight();
       this->_grounded = true;
+      this->_rotation = (atan(others.at(i).GetSlope()) * 180.0f / globals::N_PI)/2; //Divide by 2
     }
   }
 }
@@ -184,4 +194,11 @@ void Player::draw(Graphics &graphics)
 {
   AnimatedSprite::draw(graphics, this->_x, this->_y);
   //NOTE: Creo que no hace falta poner el this.
+}
+
+void Player::drawRect(Graphics &graphics)
+{
+  SDL_Rect fillRect = { this->_boundingBox.GetLeft(), this->_boundingBox.GetTop(),
+    this->_boundingBox.GetWidth(), this->_boundingBox.GetHeight() };
+  graphics.DrawRectangle(&fillRect, RED);
 }

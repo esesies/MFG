@@ -10,7 +10,7 @@ namespace globals
   const float MAX_HEIGHT = (float)(SCREEN_HEIGHT - 32.0f);
 
   const float SPRITE_SCALE = 2.0f;
-
+  const float N_PI = 3.14159265f;
 }
 
 namespace sides
@@ -34,6 +34,15 @@ namespace sides
       NONE;
   }
 }
+
+enum Color
+{
+  BLUE,
+  RED,
+  GREEN,
+  WHITE
+};
+
 
 
 enum Direction

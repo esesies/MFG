@@ -12,14 +12,14 @@
 namespace
 {
   const int FPS = 50;
-  const int MAX_FRAME_TIME = 5 * 1000 / FPS;
+  const int MAX_FRAME_TIME = 1000 / FPS;
 }
 
 Game::Game()
 {
   SDL_Init(SDL_INIT_EVERYTHING);
   this->gameLoop();
-
+  this->debug = false;
 }
 
 Game::~Game()
@@ -78,6 +78,10 @@ void Game::gameLoop()
       this->_player.jump();
     }
 
+    if (input.wasKeyPressed(SDL_SCANCODE_D) == true)
+    {
+      this->debug = !this->debug;
+    }
 
     if (!input.isKeyHeld(SDL_SCANCODE_LEFT) && !input.isKeyHeld(SDL_SCANCODE_RIGHT))
     {
@@ -100,6 +104,13 @@ void Game::draw(Graphics &graphics)
 
   this->_level.draw(graphics);
   this->_player.draw(graphics);
+
+  //Debud mode
+  if (this->debug)
+  {
+    this->_level.drawCollisions(graphics);
+    this->_player.drawRect(graphics);
+  }
 
   graphics.flip();
 }

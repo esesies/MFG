@@ -11,6 +11,7 @@ AnimatedSprite::AnimatedSprite() {}
 AnimatedSprite::AnimatedSprite(Graphics &graphics, const std::string &filePath, int sourceX, int sourceY,
   int width, int height, float posX, float posY, float timeToUpdate) :
   Sprite(graphics, filePath, sourceX, sourceY, width, height, posX, posY),
+  _rotation(0.0f),
   _frameIndex(0),
   _timeElapsed(0),
   _timeToUpdate(timeToUpdate),
@@ -76,8 +77,7 @@ void AnimatedSprite::update(int elapsedTime)
       {
         this->setVisible(false);
       }
-      this->_frameIndex = 0;
-      this->animationDone(this->_currentAnimation);
+      this->stopAnimation();
     }
   }
 }
@@ -93,19 +93,7 @@ void AnimatedSprite::draw(Graphics &graphics, int x, int y)
     destinationRectangle.h = this->_sourceRect.h * globals::SPRITE_SCALE;
 
     SDL_Rect sourceRect = this->_animations[this->_currentAnimation][this->_frameIndex];
-    graphics.blitSurface(this->_spriteSheet, &sourceRect, &destinationRectangle);
+    //This surface can be rotated
+    graphics.blitSurface(this->_spriteSheet, &sourceRect, &destinationRectangle, this->_rotation);
   }
 }
-
-
-
-//void AnimatedSprite::animationDone(std::string currentAnimation) 
-//{
-//
-//}
-
-//void AnimatedSprite::setupAnimations()
-//{
-//  this->addAnimation(3, 0, 0, "RunLeft", 16, 16, Vector2(0, 0));
-//  this->addAnimation(3, 0, 16, "RunRight", 16, 16, Vector2(0, 0));
-//}

@@ -38,6 +38,7 @@ public:
 
 
 protected:
+  double _rotation;
   double _timeToUpdate;
   bool _currentAnimationOnce;
   std::string _currentAnimation;

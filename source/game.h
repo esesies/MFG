@@ -19,6 +19,7 @@ private:
 
   Player _player;
   Level _level;
+  bool debug;
 };
 
 

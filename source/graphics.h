@@ -9,6 +9,7 @@
 #include <map>
 #include <string>
 #include <SDL.h>
+#include "globals.h"
 
 
 struct SDL_Window;
@@ -20,7 +21,6 @@ public:
   Graphics();
   ~Graphics();
 
-
   /* SDL_Surface* loadimage
    * Loads an image into the _spriteSheets map if it doesn´t already exist.
    * As a result, each image will only ever be loaded once.
@@ -31,7 +31,12 @@ public:
   /* void blitSurface
    * Draws a texture to a certain part of the screen.
    */
-  void blitSurface(SDL_Texture* source, SDL_Rect* sourceRectangle, SDL_Rect* destinationRectangle);
+  void blitSurface(SDL_Texture* texture, SDL_Rect* sourceRectangle, SDL_Rect* destinationRectangle);
+  void blitSurface(SDL_Texture* texture, SDL_Rect* sourceRectangle, SDL_Rect* destinationRectangle, const double rot);
+
+  void DrawRectangle(const SDL_Rect *destinationRectangle, const Color color);
+  void DrawLinie(const Vector2 p1, const Vector2 p2, const Color color);
+
 
   /* void flip
    * Renders everthing to the screen.
@@ -48,11 +53,15 @@ public:
    */
   SDL_Renderer* getRenderer() const;
 
+
+
 private:
   SDL_Window*    _window;
   SDL_Renderer*  _renderer;
 
   std::map<std::string, SDL_Surface*> _spriteSheets;
+
+  int Graphics::SetColor(Color color);
 };
 
 #endif

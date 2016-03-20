@@ -58,13 +58,19 @@ public:
       return false;
 
     //y=mx+n
+    //Calculate n
     int n = this->_p1.y - this->_slope * fabs(this->_p1.x);
-    int xBot;
 
-    if (this->_slope < 0)
-      xBot = other.GetRight();
-    else
-      xBot = other.GetLeft();
+    //Which corner has collided
+    //int xBot;
+
+    //if (this->_slope < 0)
+    //  xBot = other.GetRight();
+    //else
+    //  xBot = other.GetLeft();
+
+    //We take the CenterX to check the collision
+    int xBot = other.GetCenterX();
 
     int y1 = this->_slope * xBot + n;
     if (other.GetBottom() >= y1)

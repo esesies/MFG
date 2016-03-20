@@ -16,6 +16,7 @@ public:
   Player();
   Player(Graphics &graphics, Vector2 spawnPoint);
   void draw(Graphics &graphics);
+  void drawRect(Graphics &graphics);
   void update(float elapsedTime);
 
   /* void moveLeft

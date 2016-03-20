@@ -22,6 +22,7 @@ public:
 
   void update(float elapsedTime);
   void draw(Graphics &graphics);
+  void drawCollisions(Graphics &graphics);
 
   std::vector<Rectangle> CheckTileCollision(const Rectangle& other);
   std::vector<Slope> CheckSlopeCollision(const Rectangle& other);
